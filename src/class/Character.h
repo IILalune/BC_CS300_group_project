@@ -1,7 +1,7 @@
 // Character that contain information of the character 
 // and the action perform each turn in the room
 // A BOSS is also a character and have HIS own invetory. IF we defeat the boss we claim the inventory. 
-// 3 boos mass. 1 for the end, 1 for half way and 1 for a secret room. 
+// 3 bosses max. 1 for the end, 1 for half way and 1 for a secret room. 
 
 // + attack() : void
 // +castSpell() : void
@@ -25,8 +25,11 @@
  * - int Mana
  * - int maxMana
  * - int Defense
- * - int physicalAttack
+ * - int minPhysicalAttack
+ * - int maxPhysicalAttack
  * - int magicalAttack
+ * - int magicalAttack
+ * 
  * - Status status 
  * - Inventory inventory
  * - Item equippedWeapon
