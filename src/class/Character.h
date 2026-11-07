@@ -5,8 +5,13 @@
 // 3 bosses max. 1 for the end, 1 for half way and 1 for a secret room. 
 
 
+
 #ifndef CHARACTER_
 #define CHARACTER_
+
+#include "ElementalEffects.h"
+
+
 
 class Character {
     public:
@@ -36,7 +41,7 @@ class Character {
         int minPhysicalAttack;
         int maxPhysicalAttack;
         int magicalAttack;
-        int magicalAttack;
+    
   
         Affects status;  // An Queue array that store affects
         Inventory inventory;

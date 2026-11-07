@@ -1,14 +1,27 @@
+/** @file Dice.h */
 // Dices class containing one 6 sided dice and 3 sided dice
 // Roll the six sided dice for the range of the attack damage
 // Roll the second dice, if it match critical damage 2x
 
-// Subclass to character, use for modify the attack output
+#ifndef DICE_H_
+#define DICE_H_
 
-//+ rollDice() : vector??
+#include<vector> 
 
+class Dice {
 
-// Field 
-// int sixDice;
-// int fourDice;
+    // Constructor and Deconstructor
+    Dice();
+    ~Dice() override;
 
+    Dice(const Dice&) = delete;
+    Dice& operator=(const Dice&) = delete;
 
+    std::vector<int> rollDice(); 
+
+    private:
+        int sixDice;
+        int fourDice;
+};
+
+#endif // DICE_H_

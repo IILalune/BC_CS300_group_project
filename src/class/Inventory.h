@@ -6,6 +6,6 @@
 
 
 // Field :
-// - Bag<Item> items;
+// - ArrayList<Item_>;
 // - int numItems;
 // - int maxItems;

@@ -1,8 +1,12 @@
 /** @file Affect.h*/
 
+#ifndef ELEMENTAL_EFFECT_
+#define ELEMENTAL_EFFECT_
+
+
 #include<string>
 
-enum class AffectType {AIR, FIRE, EARTH, WATER};
+enum class ElementalType {AIR, FIRE, EARTH, WATER};
 
 
 class Affect {
@@ -13,6 +17,9 @@ class Affect {
     // Fire (Extra damage tick each turn)
 
     //Field        
-        AffectType affectType;
+        ElementalType affectType;
         int level;
-}
+};
+
+#endif // ELEMENTAL_EFFECTS_
+
