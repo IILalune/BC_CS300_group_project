@@ -1,3 +1,0 @@
-/** @file Dice.cpp */
-
-#ifndef 
