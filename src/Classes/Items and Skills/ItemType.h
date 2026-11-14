@@ -1,9 +1,11 @@
 #ifndef ITEM_TYPE_H_
 #define ITEM_TYPE_H_
 
-#include <string>
-
-//add more if needed
-enum class ItemType {Weapon, Armor, Potion};
+/**
+ * Currently could just go in BaseItem.h, might be useful here later.
+ * 
+ * add more types if needed
+ */
+enum class ItemType {Weapon, Armor, Consumable};
 
 #endif
