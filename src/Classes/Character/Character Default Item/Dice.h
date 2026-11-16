@@ -17,10 +17,17 @@ class Dice {
         */
         const int* rollDice(); 
 
+        /**
+         * @brief  Check if the roll is critical
+         * pre : the Dice should be rolled once, else critical is false by default
+         * @return <True> if the dice roll is a critical hit
+         */
+        bool isCritical();
+        
     private:
         int sixDice;
         int threeDice;
-        int result[3];
-};
+        int result[3] = {0, 0, 0};
+    };
 
 #endif // DICE_H_

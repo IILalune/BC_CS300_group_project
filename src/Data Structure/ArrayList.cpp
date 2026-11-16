@@ -6,10 +6,10 @@
 #include <stdexcept>
 
 template <class ItemType>
-ArrayList<ItemType>::ArrayList() {
-    this->items = new ItemType[DEFAULT_CAPACITY];
+ArrayList<ItemType>::ArrayList(int size) {
+    this->items = new ItemType[size];
     this->itemCount = 0;
-    this->maxItems = DEFAULT_CAPACITY;
+    this->maxItems = size;
 }
 
 template <class ItemType>

@@ -83,7 +83,7 @@ class BaseItem {
          * @return item's ItemType
          * Might not be used depending on implementation
          */
-        //virtual ItemType getItemType() const = 0;
+        virtual ItemType getItemType() const = 0;
 
         /**
          * @param TBD undecided
@@ -105,3 +105,4 @@ class BaseItem {
 };
 
 #endif
+

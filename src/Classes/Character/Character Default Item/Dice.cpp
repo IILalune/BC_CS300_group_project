@@ -5,16 +5,25 @@
 
 
 Dice::Dice() {
-    sixDice = 6;
-    threeDice = 3;
+    sixDice = 0;
+    threeDice = 0;
+}
+
+
+bool Dice::isCritical() {
+    if (result[2] == 0) {
+        return false;
+    } else if (result[2] == 1) {
+        return true;
+    }
 }
 
 const int*  Dice::rollDice() {
     static std::random_device randomDevice;
     static std::mt19937 generator(randomDevice());
 
-    std::uniform_int_distribution<int> rollSixSide(1, sixDice);
-    std::uniform_int_distribution<int> rollThreeSide(1, threeDice);
+    std::uniform_int_distribution<int> rollSixSide(1, 6);
+    std::uniform_int_distribution<int> rollThreeSide(1, 3);
 
     int damageDice = rollSixSide(generator);
     int criticalDice = rollThreeSide(generator);
