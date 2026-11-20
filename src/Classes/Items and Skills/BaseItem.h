@@ -101,6 +101,11 @@ class BaseItem {
          */
         virtual std::string useItem(Character& character) const;
 
+        /**
+         * @return full description of what an item does (physical attack, heal, etc)
+         */
+        std::string itemDescription() const;
+
     private:
             int             itemId;
             std::string     name;
@@ -109,6 +114,8 @@ class BaseItem {
             int             physicalDefense;
             int             magicDefense;
             int             heal;
+
+            std::string     itemDetails() const;
 
 };
 
