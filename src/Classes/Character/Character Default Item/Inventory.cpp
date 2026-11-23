@@ -2,14 +2,14 @@
 
 #include "Inventory.h"
 
-Inventory::Inventory() : inventory(MAX_ITEMS) {
+Inventory::Inventory(int inventoryCapacity) : inventory(inventoryCapacity) {
+    maxItems = inventoryCapacity;
 }
 
 bool Inventory::addItem(BaseItem* item) {
     if (item == nullptr || isFull()) {
         return false;
     }
-
     return inventory.insert(inventory.getLength() + 1, item);
 }
 
@@ -21,8 +21,16 @@ BaseItem* Inventory::getItem(int position) const {
     return inventory.getEntry(position);
 }
 
+bool Inventory::replaceItem(int position, BaseItem* item) {
+    return inventory.setEntry(position,item);
+}
+
 int Inventory::getItemCount() const {
     return inventory.getLength();
+}
+
+int Inventory::getCapacity() const {
+    return maxItems;
 }
 
 bool Inventory::isEmpty() const {
@@ -30,5 +38,5 @@ bool Inventory::isEmpty() const {
 }
 
 bool Inventory::isFull() const {
-    return inventory.getLength() >= MAX_ITEMS;
+    return inventory.getLength() >= maxItems;
 }

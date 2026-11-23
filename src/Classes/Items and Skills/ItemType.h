@@ -4,6 +4,6 @@
 #include <string>
 
 //add more if needed
-enum class ItemType {Weapon, Armor, Potion};
+enum class ItemType {Weapon, Armor, Consumable};
 
 #endif

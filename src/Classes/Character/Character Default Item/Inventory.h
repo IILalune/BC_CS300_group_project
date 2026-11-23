@@ -3,30 +3,30 @@
 #ifndef INVENTORY_H
 #define INVENTORY_H
 
-#include "../../../Data Structure/ArrayList.h"
-#include "../../Items and Skills/ItemType.h"
-#include "../../Items and Skills/BaseItem.h"
+#include "ArrayList.h"
+#include "ItemType.h"
+#include "BaseItem.h"
 
 /**
- * @brief Stores up to ten item references for one character.
- *
+ * @brief Stores a chosen number of item references for one character.
  * Inventory does not create or delete items. It only remembers where an item is.
  */
 class Inventory {
     public:
-        static const int MAX_ITEMS = 10;
 
-        Inventory();
-
+        Inventory(int inventoryCapacity);
         bool addItem(BaseItem* item);
         bool removeItem(int position);
+        bool replaceItem(int position, BaseItem* item);
         BaseItem* getItem(int position) const;
 
         int getItemCount() const;
+        int getCapacity() const;
         bool isEmpty() const;
         bool isFull() const;
 
     private:
+        int maxItems;
         ArrayList<BaseItem*> inventory;
 };
 
