@@ -8,7 +8,13 @@
 #ifndef ITEM_INTERFACE_H_
 #define ITEM_INTERFACE_H_
 
+#include "Classes/Items and Skills/ItemType.h"
+
 #include <string>
+
+//TODO: finish useItem when Character classes are finished
+
+class Character; //forward declaration
 
 class BaseItem {
     public:
@@ -71,13 +77,13 @@ class BaseItem {
         /**
          * @return true if equipable
          */
-        virtual bool isEquipable() = 0;
+        virtual bool isEquipable() const;
 
         /**
          * @return true if useable
          * POSSIBLY REDUNDANT - we may just use isEquipable() for all useable items
          */
-        //virtual bool isUseable() = 0;
+        virtual bool isUsable() const;
 
         /**
          * @return item's ItemType
@@ -86,12 +92,19 @@ class BaseItem {
         virtual ItemType getItemType() const = 0;
 
         /**
-         * @param TBD undecided
+         * @param character the character that is using the potion
          * @return message when used
          * This method's parameters will be changed depending on what the implementation of 
          *    the player/monster classes
+         * 
+         * Currently designed to only ever affect the Character that uses it
          */
-        //virtual std::string useItem(TBD TBD) const = 0;
+        virtual std::string useItem(Character& character) const;
+
+        /**
+         * @return full description of what an item does (physical attack, heal, etc)
+         */
+        std::string itemDescription() const;
 
     private:
             int             itemId;
@@ -101,6 +114,8 @@ class BaseItem {
             int             physicalDefense;
             int             magicDefense;
             int             heal;
+
+            std::string     itemDetails() const;
 
 };
 
