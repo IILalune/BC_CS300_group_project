@@ -41,7 +41,7 @@ bool Character::physicalAttack(Character& target) {
 bool Character::magicalAttack(Character& target) {
     if (target.Health == 0) { return false;}
     
-    target.takeDamage(magicAttack * equipment.getMagicDefenseBonusMultiplier());
+    target.takeDamage(magicAttack + equipment.getMagicAttackBonus());
     return true;
 }
 
@@ -177,7 +177,7 @@ bool Character::unequipItem(EquipmentSlot targetSlot) {
     if (gearInventory.isFull()) {return false;}
         
     BaseItem* equipedItem = equipment.unequipItem(targetSlot);
-    if (equipItem == nullptr) {return false;}
+    if (equipedItem == nullptr) {return false;}
     return gearInventory.addItem(equipedItem);
 
 }

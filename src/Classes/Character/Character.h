@@ -43,7 +43,7 @@ class Character {
 
         
         // Accessors, value returned with bonus added
-        const std::string getName() const;
+        const std::string& getName() const;
         int getLevel() const;
         int getLevelPoint() const;
         int getHealth() const; 
@@ -51,7 +51,8 @@ class Character {
         int getMinPhysicalAttack() const ;
         int getMaxPhysicalAttack() const;
         int getMana() const;
-        int getMaxMana() const
+        int getMaxMana() const;
+        int getDefense() const;
     
     private:
     /** Field*/

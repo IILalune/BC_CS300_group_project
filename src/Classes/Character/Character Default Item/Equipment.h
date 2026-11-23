@@ -29,7 +29,7 @@ class Equipment {
         int getPhysicalAttackBonus() const;
         int getMagicAttackBonus() const;
         int getPhysicalDefenseBonus() const;
-        int getMagicDefenseBonusMultiplier() const;
+        int getMagicDefenseBonus() const;
     private:
         BaseItem* equipmentSlots[4];
         bool isValidSlot(EquipmentSlot targetSlot) const;
