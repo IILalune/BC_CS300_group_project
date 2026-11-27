@@ -55,14 +55,19 @@ void ArrayQueue<ItemType>::dequeue() {
         throw std::out_of_range("ArrayQueue::dequeue(): the queue is empty");
     }
 
+    // A room's queue must release its reference to a defeated monster here.
+    const ItemType emptySlot{};
+    items[frontIndex] = emptySlot;
     frontIndex = (frontIndex + 1) % maxItems;
     itemCount--;
 }
 
 template <class ItemType>
 void ArrayQueue<ItemType>::clear() {
+    while (!isEmpty()) {
+        dequeue();
+    }
     frontIndex = 0;
-    itemCount = 0;
 }
 
 template <class ItemType>

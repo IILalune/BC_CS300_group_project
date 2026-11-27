@@ -5,15 +5,15 @@
 #include "Classes/Items and Skills/ItemTypes/Consumable.h"
 #include "Classes/Character/Character.h"
 
-//TODO: finish useItem()
+#include <algorithm>
 
 Consumable::Consumable (int itemId, 
                         const std::string& name,
-                        int physicalAttack = 0,
-                        int magicAttack = 0,
-                        int physicalDefense = 0,
-                        int magicDefense = 0,
-                        int heal = 0) 
+                        int physicalAttack,
+                        int magicAttack,
+                        int physicalDefense,
+                        int magicDefense,
+                        int heal)
             :BaseItem  (itemId,
                         name,
                         physicalAttack,
@@ -30,12 +30,13 @@ Consumable::Consumable (int itemId,
         return true;
     }
 
-    /**
-     * IMPLEMENT WHEN Character.h and cpp ARE FINISHED
-     * currently only heal will be implemented, add more if needed
-     */
-    std::string Consumable::useItem(Character& character) const {
-        
-
-        return character.getName() + " used " + getItemName();
+std::string Consumable::useItem(Character& character) const {
+    const std::string message = character.getName() + " used " + getItemName();
+    const int health = character.getHealth();
+    const int maxHealth = character.getMaxHealth();
+    // restoreHealth adds directly, so the potion enforces the HP cap.
+    if (health > 0 && health < maxHealth && getHeal() > 0) {
+        character.restoreHealth(std::min(getHeal(), maxHealth - health));
     }
+    return message;
+}

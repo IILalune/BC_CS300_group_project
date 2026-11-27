@@ -3,15 +3,20 @@
 
 #include <iostream>
 #include <memory>
+#include <random>
 #include <stack>
 #include <vector>
 
 #include "Room.h"
+#include "../Combat/Battle.h"
+
+class Character;
 
 class DungeonMap {
  public:
   // DungeonMap stores a reference, so the report stream must outlive it.
   explicit DungeonMap(std::ostream& report = std::cout);
+  DungeonMap(std::ostream& report, std::mt19937 encounterRng);
   DungeonMap(const DungeonMap&) = delete;
   DungeonMap& operator=(const DungeonMap&) = delete;
 
@@ -24,18 +29,23 @@ class DungeonMap {
   std::vector<int> AvailableRoom() const;
   bool MoveToRoom(int id);
   bool GoBack();
+  BattleResult FightCurrentRoom(Character& player, std::istream& input);
   bool ClearCurrentRoom();  // Call after the combat system confirms victory.
   bool OpenCurrentTreasure();
+  bool OpenCurrentTreasure(Character& player);
+  void CollectCurrentLoot(Character& player);
   bool AllRoomsConnected() const;
 
  private:
   std::shared_ptr<Room> findRoom(int id) const;
   std::shared_ptr<Room> travelTarget(int id) const;
-  void enterRoom(const std::shared_ptr<Room>& target);
+  void enterRoom(const std::shared_ptr<Room>& target, bool backtracking);
 
   LinkedList<std::shared_ptr<Room>> rooms;
   std::stack<int> history;  // Tracks the route. Room state stays in rooms.
   int currentRoomID = -1;
   std::ostream& out;
+  std::mt19937 encounterRng;
+  std::mt19937 lootRng;
 };
 #endif

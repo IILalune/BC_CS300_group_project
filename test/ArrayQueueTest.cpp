@@ -1,6 +1,7 @@
 /** @file ArrayQueueTest.cpp */
 
 #include <gtest/gtest.h>
+#include <memory>
 #include <stdexcept>
 #include <string>
 
@@ -45,6 +46,18 @@ TEST(ArrayQueueTest, PeekOnEmptyQueueThrows) {
     ArrayQueue<int> queue;
 
     EXPECT_THROW(queue.peek(), std::out_of_range);
+}
+
+TEST(ArrayQueueTest, RemovingAnItemReleasesTheQueuesOwnership) {
+    ArrayQueue<std::shared_ptr<int>> queue;
+    queue.enqueue(std::make_shared<int>(1));
+    queue.enqueue(std::make_shared<int>(2));
+    std::weak_ptr<int> first = queue.peek();
+    queue.dequeue();
+    EXPECT_TRUE(first.expired());
+    std::weak_ptr<int> second = queue.peek();
+    queue.clear();
+    EXPECT_TRUE(second.expired());
 }
 
 TEST(ArrayQueueTest, DequeueOnEmptyQueueThrows) {
