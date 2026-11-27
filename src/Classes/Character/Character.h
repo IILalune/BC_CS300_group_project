@@ -8,8 +8,9 @@
 #include "Character Default Item/Dice.h"
 #include "Character Default Item/Equipment.h"
 #include "Character Default Item/Inventory.h"
-#include "DungeonMap.h"
 #include "BaseItem.h"
+
+class DungeonMap;
 
 class Character {
     public:
@@ -37,7 +38,8 @@ class Character {
         BaseItem* getConsumableItem(int inventoryPosition) const;
         int getGearItemCount() const;
         int getConsumableItemCount() const;
-        //bool useConsumble(Inventory consumableSlot);    Wait for implementation of consumable
+        // Battle spends the player's turn only when a potion is consumed.
+        bool useConsumableItem(int inventoryPosition);
         void restoreHealth(int restoreValue); 
         void restoreMana(int restoreValue); 
 
@@ -53,6 +55,17 @@ class Character {
         int getMana() const;
         int getMaxMana() const;
         int getDefense() const;
+
+    protected:
+        struct StartingStats {
+            std::string name;
+            int health;
+            int mana;
+            int minPhysicalAttack;
+            int maxPhysicalAttack;
+            int magicAttack;
+        };
+        explicit Character(StartingStats stats);
     
     private:
     /** Field*/

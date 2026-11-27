@@ -46,6 +46,9 @@ class ItemRegistry {
          */
         const BaseItem& itemDef(int id) const;
 
+        // Room loot uses these borrowed item definitions with Character::addItem().
+        static BaseItem* inventoryItem(int id);
+
         /**
          * @return total item count in registry
          */

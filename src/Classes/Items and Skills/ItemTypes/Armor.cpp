@@ -9,11 +9,11 @@
 
 Armor::Armor (int itemId, 
                         const std::string& name,
-                        int physicalAttack = 0,
-                        int magicAttack = 0,
-                        int physicalDefense = 0,
-                        int magicDefense = 0,
-                        int heal = 0) 
+                        int physicalAttack,
+                        int magicAttack,
+                        int physicalDefense,
+                        int magicDefense,
+                        int heal)
             :BaseItem  (itemId,
                         name,
                         physicalAttack,

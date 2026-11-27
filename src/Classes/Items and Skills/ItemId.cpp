@@ -70,6 +70,12 @@ const BaseItem& ItemRegistry::itemDef(int id) const {
     return *itemDefs_[id];
 }
 
+BaseItem* ItemRegistry::inventoryItem(int id) {
+    // The catalog must outlive every bag that holds a pointer to one of its items.
+    static ItemRegistry catalog;
+    return catalog.itemDefs_.at(id).get();
+}
+
 int ItemRegistry::itemCount() const {
     return static_cast<int>(itemDefs_.size()); //.size() returns an unsigned int which cant be negative, casting to int just in case
 }

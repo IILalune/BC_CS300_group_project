@@ -1,5 +1,20 @@
-// Monster class that populate the room and need to ellimenate for lvl up
-// Subclass of Characterclass
+#ifndef MONSTER_H_
+#define MONSTER_H_
 
-// + attack() : bool
-// + specialSkill()
+#include "Character.h"
+
+enum class MonsterKind { Goblin, Wisp, Dragon };
+enum class AttackStyle { Physical, Magic };
+
+// Each kind uses Character's attacks with its own starting stats and counterattack style.
+class Monster : public Character {
+public:
+    explicit Monster(MonsterKind kind);
+    AttackStyle attackStyle() const;
+
+private:
+    static StartingStats startingStats(MonsterKind kind);
+    MonsterKind kind;
+};
+
+#endif

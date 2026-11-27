@@ -4,7 +4,6 @@
 #define ARRAY_QUEUE_H_
 
 #include "QueueInterface.h"
-#include "ArrayQueue.cpp"
 
 /**
  * @brief A first-in, first-out queue stored in a resizable circular array.
@@ -43,5 +42,8 @@ private:
      */
     void resize(int newCapacity);
 };
+
+// Callers need the template definitions after the class declaration.
+#include "ArrayQueue.cpp"
 
 #endif  // ARRAY_QUEUE_H_

@@ -2,8 +2,13 @@
 
 #include <queue>
 #include <stdexcept>
+#include <utility>
 
-DungeonMap::DungeonMap(std::ostream& report) : out(report) {}
+DungeonMap::DungeonMap(std::ostream& report)
+    : DungeonMap(report, std::mt19937(std::random_device{}())) {}
+
+DungeonMap::DungeonMap(std::ostream& report, std::mt19937 rng)
+    : out(report), encounterRng(std::move(rng)), lootRng(encounterRng) {}
 
 std::shared_ptr<Room> DungeonMap::findRoom(int id) const {
   // Rooms are only appended, so each ID is its one-based list position.
@@ -18,6 +23,7 @@ const Room* DungeonMap::GetRoom(int id) const {
 int DungeonMap::GenerateNewRoom(RoomType type, const std::string& description) {
   const int id = rooms.getLength() + 1;
   auto room = std::make_shared<Room>(id, type, description);
+  if (currentRoomID == -1) room->prepareEncounter(encounterRng, out);
   if (!rooms.insert(id, room))
     throw std::runtime_error("Room insertion failed");
   if (currentRoomID == -1) {
@@ -96,8 +102,14 @@ std::shared_ptr<Room> DungeonMap::travelTarget(int id) const {
   return target;
 }
 
-void DungeonMap::enterRoom(const std::shared_ptr<Room>& target) {
+void DungeonMap::enterRoom(const std::shared_ptr<Room>& target, bool backtracking) {
   const bool returning = target->visited;
+  target->prepareEncounter(encounterRng, out);
+  // A forward move saves the departure room. A return consumes that saved step.
+  if (backtracking)
+    history.pop();
+  else
+    history.push(currentRoomID);
   currentRoomID = target->getRoomID();
   target->visited = true;
   out << (returning ? "Re-entered " : "Entered ") << "room #" << currentRoomID
@@ -108,8 +120,7 @@ void DungeonMap::enterRoom(const std::shared_ptr<Room>& target) {
 bool DungeonMap::MoveToRoom(int id) {
   auto target = travelTarget(id);
   if (!target) return false;
-  history.push(currentRoomID);  // Record the starting room after validating the move.
-  enterRoom(target);
+  enterRoom(target, false);
   return true;
 }
 
@@ -120,23 +131,54 @@ bool DungeonMap::GoBack() {
   }
   auto target = travelTarget(history.top());
   if (!target) return false;
-  enterRoom(target);
-  history.pop();  // Calling MoveToRoom here would add a new history entry.
+  enterRoom(target, true);
   return true;
+}
+
+BattleResult DungeonMap::FightCurrentRoom(Character& player, std::istream& input) {
+  auto room = findRoom(currentRoomID);
+  if (!room) {
+    out << "No current room.\n";
+    return BattleResult::NoEncounter;
+  }
+  const BattleResult result = RunBattle(player, *room, input, out);
+  // The battle advances the enemy queue. The map settles the room on victory.
+  if (result == BattleResult::Victory && ClearCurrentRoom()) {
+    out << "Victory in room #" << currentRoomID << ".\n";
+    room->collectLoot(player, out);
+  }
+  return result;
 }
 
 bool DungeonMap::ClearCurrentRoom() {
   auto room = findRoom(currentRoomID);
-  if (room) return room->clearEncounter(out);
+  if (room) return room->clearEncounter(lootRng, out);
   out << "No current room.\n";
   return false;
 }
 
 bool DungeonMap::OpenCurrentTreasure() {
   auto room = findRoom(currentRoomID);
-  if (room) return room->openTreasure(out);
+  if (room) return room->openTreasure(lootRng, out);
   out << "No current room.\n";
   return false;
+}
+
+bool DungeonMap::OpenCurrentTreasure(Character& player) {
+  if (!OpenCurrentTreasure()) return false;
+  findRoom(currentRoomID)->collectLoot(player, out);
+  return true;
+}
+
+void DungeonMap::CollectCurrentLoot(Character& player) {
+  auto room = findRoom(currentRoomID);
+  if (!room) {
+    out << "No current room.\n";
+  } else if (room->pendingLoot.empty()) {
+    out << "Room #" << currentRoomID << " has no loot to collect.\n";
+  } else {
+    room->collectLoot(player, out);
+  }
 }
 
 bool DungeonMap::AllRoomsConnected() const {

@@ -1,22 +1,27 @@
 /** @file Character */
 
 #include "Character.h"
+#include "DungeonMap.h"
 
-//Contructor  (Testing values, to be balance later)
-Character::Character(std::string name) {
-    Name = name; 
-    Level = 1;
-    levelPoint = 0;
-    this->minPhysicalAttack = 40;
-    this->maxPhysicalAttack = 80;    
-    this->criticalScalePoint = 2;
-    magicAttack = 25;
-    maxHealth = 100;
-    Health = maxHealth;
-    maxMana = 50;
-    Mana = maxMana;
-    Defense = 0;
-}
+#include <utility>
+
+Character::Character(std::string name)
+    : Character(StartingStats{std::move(name), 100, 50, 40, 80, 25}) {}
+
+// Monsters supply their own starting stats and use the same combat methods.
+Character::Character(StartingStats stats)
+    : Name(std::move(stats.name)),
+      Level(1),
+      levelPoint(0),
+      minPhysicalAttack(stats.minPhysicalAttack),
+      maxPhysicalAttack(stats.maxPhysicalAttack),
+      criticalScalePoint(2),
+      magicAttack(stats.magicAttack),
+      Health(stats.health),
+      maxHealth(stats.health),
+      Mana(stats.mana),
+      maxMana(stats.mana),
+      Defense(0) {}
 
 
 // Behavior
@@ -72,6 +77,20 @@ bool Character::removeGearItem(int inventoryPosition) {
 }
 bool Character::removeConsumableItem(int inventoryPosition) {
     return consumableInventory.removeItem(inventoryPosition);
+}
+
+bool Character::useConsumableItem(int inventoryPosition) {
+    if (Health <= 0 || Health >= maxHealth || inventoryPosition < 1 ||
+        inventoryPosition > getConsumableItemCount()) {
+        return false;
+    }
+    BaseItem* item = getConsumableItem(inventoryPosition);
+    if (!item || item->getItemType() != ItemType::Consumable ||
+        !item->isUsable() || item->getHeal() <= 0) {
+        return false;
+    }
+    item->useItem(*this);
+    return removeConsumableItem(inventoryPosition);
 }
 
 BaseItem* Character::getGearItem(int inventoryPosition) const {
