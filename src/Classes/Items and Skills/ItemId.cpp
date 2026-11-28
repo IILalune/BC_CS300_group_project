@@ -6,6 +6,8 @@
 #include "Classes/Items and Skills/ItemTypes/Weapon.h"
 #include "Classes/Items and Skills/ItemTypes/Armor.h"
 #include "Classes/Items and Skills/ItemTypes/Consumable.h"
+#include "Classes/Items and Skills/ItemTypes/Boots.h"
+#include "Classes/Items and Skills/ItemTypes/Charm.h"
 
 #include <stdexcept>
 
@@ -24,8 +26,24 @@ void ItemRegistry::registerItems() {
   //addItem(make_unique<>           (itemId,            "Item Name",        physAttack,     magAttack,      physDef,    magDef,     heal));
   //addItem(make_unique<>           (itemId,            "Item Name",        0,              0,              0,          0,          0));
     addItem(make_unique<Weapon>     (IronSword,         "Iron Sword",       5,              0,              0,          0,          0));
-    addItem(make_unique<Armor>      (IronShield,        "Iron Shield",      0,              0,              5,          0,          0));
+    addItem(make_unique<Weapon>     (BattleAxe,         "Battle Axe",       7,              0,              0,          0,          0));
+    addItem(make_unique<Weapon>     (LargeClub,         "Large Club",       10,              0,              0,          0,          0));
+    addItem(make_unique<Weapon>     (Warhammer,         "Warhammer",        12,              0,              0,          0,          0));
+    addItem(make_unique<Weapon>     (NoviceWand,        "Novice Wand",      1,              5,              0,          0,          0));
+    addItem(make_unique<Weapon>     (ApprenticeWand,    "Apprentice Wand",  1,              7,              0,          0,          0));
+    addItem(make_unique<Weapon>     (MasterWand,        "Master Wand",      1,              10,              0,          0,          0));
+    addItem(make_unique<Weapon>     (MagicDagger,       "Magic Dagger",     4,              4,              0,          0,          0));
+    addItem(make_unique<Weapon>     (MagicSword,        "Magic Sword",      6,              6,              0,          0,          0));
+    addItem(make_unique<Weapon>     (GreatStaff,        "Great Staff",      5,              12,              0,          0,          0));
+    addItem(make_unique<Armor>      (IronShield,        "Iron Shield",      0,              0,              5,          2,          0));
+    addItem(make_unique<Armor>      (SteelShield,       "Steel Shield",     0,              0,              7,          4,          0));
+    addItem(make_unique<Armor>      (MirrorShield,      "Mirror Shield",    0,              0,              2,          5,          0));
+    addItem(make_unique<Armor>      (MythrilShield,     "Mythril Shield",   0,              0,              4,          7,          0));
     addItem(make_unique<Consumable> (HealthPotion,      "Health Potion",    0,              0,              0,          0,          5));
+    addItem(make_unique<Boots>      (PlateBoots,        "Plate Boots",      0,              0,              5,          0,          0));
+    addItem(make_unique<Charm>      (WardCharm,         "Ward Charm",       0,              0,              3,          3,          0));
+    addItem(make_unique<Charm>      (StrengthCharm,     "Strength Charm",   5,              0,              3,          3,          0));
+
 
     if (itemCount() != Count) {
         throw std::logic_error("ItemId list has " + std::to_string(Count) 

@@ -6,6 +6,6 @@
  * 
  * add more types if needed
  */
-enum class ItemType {Weapon, Armor, Consumable};
+enum class ItemType {Weapon, Armor, Consumable, Boots, Charm};
 
 #endif

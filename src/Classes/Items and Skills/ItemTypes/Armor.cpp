@@ -26,6 +26,6 @@ Armor::Armor (int itemId,
         return ItemType::Armor;
     }
 
-    bool Armor::isUsable() const {
+    bool Armor::isEquipable() const {
         return true;
     }

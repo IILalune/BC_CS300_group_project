@@ -22,7 +22,7 @@ class Weapon : public BaseItem {
 
         //More on these in BaseItem.h
         ItemType getItemType() const override;
-        bool isUsable() const override;
+        bool isEquipable() const override;
 
 };
 
