@@ -34,7 +34,7 @@ void ItemRegistry::registerItems() {
     addItem(make_unique<Weapon>     (MasterWand,        "Master Wand",      1,              10,              0,          0,          0));
     addItem(make_unique<Weapon>     (MagicDagger,       "Magic Dagger",     4,              4,              0,          0,          0));
     addItem(make_unique<Weapon>     (MagicSword,        "Magic Sword",      6,              6,              0,          0,          0));
-    addItem(make_unique<Weapon>     (GreatStaff,        "Magic Sword",      5,              12,              0,          0,          0));
+    addItem(make_unique<Weapon>     (GreatStaff,        "Great Staff",      5,              12,              0,          0,          0));
     addItem(make_unique<Armor>      (IronShield,        "Iron Shield",      0,              0,              5,          2,          0));
     addItem(make_unique<Armor>      (SteelShield,       "Steel Shield",     0,              0,              7,          4,          0));
     addItem(make_unique<Armor>      (MirrorShield,      "Mirror Shield",    0,              0,              2,          5,          0));
