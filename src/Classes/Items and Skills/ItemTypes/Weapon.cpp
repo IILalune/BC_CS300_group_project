@@ -26,7 +26,7 @@ Weapon::Weapon (int itemId,
         return ItemType::Weapon;
     }
 
-    bool Weapon::isUsable() const {
+    bool Weapon::isEquipable() const {
         return true;
     }
 

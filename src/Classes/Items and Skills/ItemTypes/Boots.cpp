@@ -26,6 +26,6 @@ Boots::Boots (int itemId,
         return ItemType::Boots;
     }
 
-    bool Boots::isUsable() const {
+    bool Boots::isEquipable() const {
         return true;
     }

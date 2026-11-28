@@ -26,6 +26,6 @@ Charm::Charm (int itemId,
         return ItemType::Charm;
     }
 
-    bool Charm::isUsable() const {
+    bool Charm::isEquipable() const {
         return true;
     }
