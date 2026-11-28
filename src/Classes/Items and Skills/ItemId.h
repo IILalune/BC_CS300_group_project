@@ -14,8 +14,23 @@
 namespace ItemId {
     enum : int {
         IronSword,
+        BattleAxe,
+        LargeClub,
+        Warhammer,
+        NoviceWand,
+        ApprenticeWand,
+        MasterWand,
+        MagicDagger,
+        MagicSword,
+        GreatStaff, 
         IronShield,
+        SteelShield,
+        MirrorShield,
+        MythrilShield,
         HealthPotion,
+        PlateBoots,
+        WardCharm,
+        StrengthCharm,
 
         Count //number of items
     };
